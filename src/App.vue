@@ -1,11 +1,29 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import Header from '@/components/Header.vue';
+  import Presentacion from './components/Presentacion.vue';
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div class="w-full flex flex-col gap-7">
+    <Header></Header>
+    <Presentacion></Presentacion>
+  </div>
+
 </template>
 
-<style scoped></style>
+<style>
+  @import "tailwindcss";
+  @import "tailwindcss-primeui";
+
+    /* Carga los pesos que uses */
+  @import "@fontsource/poppins/400.css";
+  @import "@fontsource/poppins/500.css";
+  @import "@fontsource/poppins/600.css";
+
+  /* Aplica la fuente globalmente (PrimeVue la hereda) */
+  :root, html, body, #app {
+    font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+
+  
+</style>
