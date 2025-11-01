@@ -76,11 +76,11 @@ const servicios = [
             <div class="flex flex-col">
                 <Tabs class="bg-[#161E21]" value="0">
                     <TabList class="bg-[#161E21]">
-                        <Tab class="text-orange-400" v-for="servicio in servicios" :key="servicio.servicio" :value="servicio.value">
+                        <Tab class="text-orange-600" v-for="servicio in servicios" :key="servicio.servicio" :value="servicio.value">
                                 <h2>{{ servicio.servicio }}</h2>
                         </Tab>
                     </TabList>
-                    <TabPanels class="bg-[#161E21]">
+                    <TabPanels class="bg-[#161E21] rounded-b-2xl">
                         <TabPanel v-for="servicio in servicios" :key="servicio.descripcion" :value="servicio.value">
                             <p class="m-0 leading-relaxed text-lg whitespace-pre-line leading-relaxed text-surface-100">
                                 {{ servicio.descripcion }}
