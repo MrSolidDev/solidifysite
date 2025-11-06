@@ -199,21 +199,7 @@ const servicios = [
             Nuestro propósito es acompañarte desde la idea hasta el resultado final, 
             construyendo soluciones tecnológicas claras, confiables y hechas a tu medida.
         </p>
-        <div class="flex w-full gap-4 justify-center">
-            <Card
-            v-for="(card, i) in cards"
-            :key="i"
-            class="w-full sm:w-[30%] bg-[#161E21] text-primary-400 shadow-[_0_4px_4px_rgba(0,0,0,0.5)] rounded-b-2xl p-4">
-                <template #title>
-                    <h2 class="font-bold mb-6 text-2xl">{{card.title}}</h2>
-                    
-                </template>
-                <template #content>
-                    <div class="m-0 leading-relaxed text-lg text-surface-300 space-y-2" v-html="card.content"></div>
-                </template>
-            </Card>
-        </div>
-        <Fieldset legend="Servicios - Lo que hacemos, lo hacemos con propósito" class="w-[90%] h-[60vh] text-primary rounded-b-2xl p-4 shadow-[_0_4px_4px_rgba(0,0,0,0.5)]">
+        <Fieldset legend="Servicios - Lo que hacemos, lo hacemos con propósito" class="w-[90%] text-primary rounded-b-2xl p-4 shadow-[_0_4px_4px_rgba(0,0,0,0.5)]">
             <div class="flex flex-col gap-4 min-h-full">
                 <h2 class="text-primary-400 ">En Solidify no solo desarrollamos software; creamos soluciones que conectan, facilitan y potencian el crecimiento de tu proyecto o empresa.</h2>
                 <Tabs class="flex flex-col flex-1 bg-[#161E21]" value="0">
@@ -232,5 +218,19 @@ const servicios = [
                 </Tabs>
             </div>
         </Fieldset>
+        <div class="flex w-full gap-4 justify-center">
+            <Card
+            v-for="(card, i) in cards"
+            :key="i"
+            class="w-full sm:w-[30%] bg-[#161E21] text-primary-400 shadow-[_0_4px_4px_rgba(0,0,0,0.5)] rounded-b-2xl p-4">
+                <template #title>
+                    <h2 class="font-bold mb-6 text-2xl">{{card.title}}</h2>
+                    
+                </template>
+                <template #content>
+                    <div class="m-0 leading-relaxed text-lg text-surface-300 space-y-2" v-html="card.content"></div>
+                </template>
+            </Card>
+        </div>
     </div>
 </template>
