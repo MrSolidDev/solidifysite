@@ -1,12 +1,16 @@
 <script setup lang="ts">
   import Header from '@/components/Header.vue';
-  import Presentacion from './components/Presentacion.vue';
+  import Presentacion from '@/components/Presentacion.vue';
+  import misionVisionValores from '@/components/misionVisionValores.vue';
+  import Servicios from '@/components/Servicios.vue';
 </script>
 
 <template>
   <div class="w-full flex flex-col gap-7">
     <Header></Header>
     <Presentacion></Presentacion>
+    <Servicios></Servicios>
+    <misionVisionValores></misionVisionValores>
   </div>
 
 </template>
