@@ -3,16 +3,17 @@
   import Presentacion from '@/components/Presentacion.vue';
   import misionVisionValores from '@/components/misionVisionValores.vue';
   import Servicios from '@/components/Servicios.vue';
+  import AboutMe from '@/components/AboutMe.vue';
 </script>
 
 <template>
   <div class="w-full flex flex-col gap-7">
     <Header></Header>
+    <AboutMe></AboutMe>
     <Presentacion></Presentacion>
     <Servicios></Servicios>
     <misionVisionValores></misionVisionValores>
   </div>
-
 </template>
 
 <style>
