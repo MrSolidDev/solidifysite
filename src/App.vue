@@ -25,5 +25,11 @@
     font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   }
 
+  .rich ul { list-style: disc; margin-left: 1.5rem; }
+  .rich li { margin: 0.25rem 0; }
+  .rich strong { font-weight: 600; }
+  .rich h3 { line-height: 1.2; }
+  .rich h4 { margin-bottom: .25rem; }
+
   
 </style>
