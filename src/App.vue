@@ -7,10 +7,10 @@
 </script>
 
 <template>
-  <div class="w-full flex flex-col gap-7">
-    <Header></Header>
-    <AboutMe></AboutMe>
+  <Header></Header>
+  <div class="w-full flex justify-center items-center flex-col lg:gap-20 pt-10">
     <Presentacion></Presentacion>
+    <AboutMe></AboutMe>
     <Servicios></Servicios>
     <misionVisionValores></misionVisionValores>
   </div>

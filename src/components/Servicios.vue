@@ -6,6 +6,7 @@ import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
+import { scrollToNext } from '@/utilities/scroll';
 
 const servicios = [
   {
@@ -158,7 +159,8 @@ const servicios = [
 
 </script>
 <template>
-    <div class="flex flex-col w-full justify-center items-center gap-5">
+    <div v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 slide-in-from-l-8 animate-duration-1000', leaveClass: 'animate-leave fade-out-0' }"
+     class="flex flex-col w-full justify-center items-center gap-5 min-h-screen">
         <Fieldset legend="Servicios - Lo que hacemos, lo hacemos con propósito" class="w-[90%] text-primary rounded-b-2xl p-4 shadow-[_0_4px_4px_rgba(0,0,0,0.5)]">
             <div class="flex flex-col gap-4 min-h-full">
                 <h2 class="text-primary-400 ">En Solidify no solo desarrollamos software; creamos soluciones que conectan, facilitan y potencian el crecimiento de tu proyecto o empresa.</h2>
@@ -178,5 +180,11 @@ const servicios = [
                 </Tabs>
             </div>
         </Fieldset>
+        <div
+        class="mt-10 animate-bounce text-orange-400 text-6xl cursor-pointer drop-shadow-[0_0_10px_rgba(255,138,0,0.5)] hover:drop-shadow-[0_0_15px_rgba(255,138,0,0.8)] transition-all"
+        @click="scrollToNext"
+        >
+            <i class="pi pi-angle-down"></i>
+        </div>
     </div>
 </template>
