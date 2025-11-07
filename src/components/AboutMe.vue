@@ -4,7 +4,6 @@ import  Card  from 'primevue/card';
 import Image from 'primevue/image';
 import bryanr from '@/assets/bryanr.jpeg'
 import { ref } from "vue";
-
 import { scrollToNext } from '@/utilities/scroll';
 
 
