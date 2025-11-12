@@ -4,8 +4,26 @@
     import Breadcrumb from 'primevue/breadcrumb';
     import logo from '@/assets/logo.jpg';
 
-  const home = ref({ icon: 'pi pi-home' });
-  const items = ref([{ icon: 'pi pi-user', label: 'Sobre mi' },  { icon: 'pi pi-lightbulb', label: 'Solidify'}, { icon: 'pi pi-wallet', label: 'Proyectos' }, { icon: 'pi pi-address-book', label: 'Conatacto' }]);
+  
+  //{ icon: 'pi pi-wallet', label: 'Proyectos' }
+  //const items = ref([{ icon: 'pi pi-user', label: 'Sobre mi' },  { icon: 'pi pi-lightbulb', label: 'Solidify'}, { icon: 'pi pi-address-book', label: 'Conatacto' }]);
+
+  function goTo(id: string) {
+    const el = document.querySelector(id);
+    if (el != null) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 200; // altura header
+      window.scrollTo({ top: y, behavior: 'smooth' });  
+    } else{
+      return
+    }
+  }
+  const home = ref({ icon: 'pi pi-home', command: () => goTo('#presentacion') });
+  const items = [
+    { label: 'Sobre mí',     icon: 'pi pi-user',     command: () => goTo('#about') },
+    { label: 'Servicios',    icon: 'pi pi-briefcase', command: () => goTo('#servicios') },
+    { label: 'M/V/V',        icon: 'pi pi-heart',     command: () => goTo('#mvv') },
+    { label: 'Contacto',        icon: 'pi-address-book',     command: () => goTo('#contacto') }
+  ];
 </script>
 
 <template>
@@ -20,6 +38,7 @@
           </div>
         </div>
         <div class="card flex justify-center">
+        <!--
           <Breadcrumb :home="home" :model="items"
           :pt="{
               root: { class: 'bg-[#161E21] p-2 rounded-lg' }
@@ -37,6 +56,27 @@
                     </a>
             </template>
           </Breadcrumb>
+        -->
+          <Breadcrumb
+              :home="home"
+              :model="items"
+              :pt="{
+                root: { class: 'bg-[#161E21] p-2 rounded-lg border border-white/5 shadow' }
+              }"
+            >
+              <template #item="{ item, props }">
+                <a
+                  href=""
+                  v-bind="props.action"
+                  @click.prevent
+                  class="flex items-center gap-2 px-2 py-1 hover:text-primary-300 transition-colors"
+                >
+                  <span :class="[item.icon, 'pi-fw', 'text-primary-200']" />
+                  <span class="font-semibold text-surface-200">{{ item.label }}</span>
+                </a>
+              </template>
+          </Breadcrumb>
+
         </div>
       </div>
   </header>

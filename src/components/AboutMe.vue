@@ -37,6 +37,124 @@ const descripcion_html = `
   </section>
 `
 
+const habilidades = ref([
+  {
+    icon: 'pi pi-cog text-orange-400', // ⚙️
+    title: 'Desarrollo Full Stack',
+    content: `
+      <p>
+        Amplia experiencia construyendo <strong>aplicaciones escalables</strong> con 
+        <span class="text-primary-300 font-medium">Python</span>, 
+        <span class="text-primary-300 font-medium">JavaScript</span>, 
+        <span class="text-primary-300 font-medium">Vue </span>, 
+        <span class="text-primary-300 font-medium">Django</span>, 
+        <span class="text-primary-300 font-medium">FastAPI</span> y 
+        <span class="text-primary-300 font-medium">Node.js</span>.
+      </p>
+
+      <p class="mt-2">
+        Aplico <em>principios de arquitectura limpia</em>, desarrollo modular y comunicación eficiente 
+        entre <strong>front-end</strong> y <strong>back-end</strong>.
+      </p>
+
+      <p class="mt-2">
+        Trabajo con <strong>TypeScript</strong>, <strong>Pinia</strong>, <strong>Axios</strong>, 
+        y frameworks modernos como <strong>PrimeVue</strong> y <strong>TailwindCSS</strong>, 
+        priorizando <span class="text-orange-400">fluidez visual</span>, 
+        <span class="text-orange-400">rendimiento</span> y <span class="text-orange-400">mantenibilidad</span>.
+      </p>
+    `
+  },
+  {
+    icon: 'pi pi-link text-orange-400', // 🔗
+    title: 'Integraciones empresariales',
+    content: `
+      <p>
+        Especialista en <strong>conectar sistemas complejos</strong> mediante 
+        <em>OData</em>, <em>REST APIs</em> y <em>servicios cloud</em>.
+      </p>
+
+      <p class="mt-2">
+        Experiencia integrando aplicaciones personalizadas con 
+        <strong>SAP</strong>, <strong>AWS</strong> y <strong>SQL Server</strong>, 
+        automatizando <span class="text-orange-400">procesos financieros y operativos</span>.
+      </p>
+
+      <p class="mt-2">
+        Mis integraciones no solo comunican sistemas, sino que 
+        <strong>optimizan información</strong> y <strong>reducen la carga manual</strong> del equipo.
+      </p>
+    `
+  },
+  {
+    icon: 'pi pi-palette text-orange-400', // 🎨
+    title: 'Experiencias interactivas y digital signage',
+    content: `
+      <p>
+        Desarrollo de <strong>soluciones creativas</strong> que combinan 
+        <em>software, sensores y contenido audiovisual</em>.
+      </p>
+
+      <p class="mt-2">
+        He diseñado experiencias inmersivas usando 
+        <strong>QuickplayX</strong> (plataforma propia de reproducción multimedia) e integraciones 
+        con hardware como <em>sensores PIR</em>, <em>Nexmosphere</em> y 
+        <em>controladores de iluminación</em>.
+      </p>
+
+      <p class="mt-2">
+        Mi enfoque une <span class="text-primary-300 font-medium">ingeniería</span> y 
+        <span class="text-orange-400 font-medium">diseño</span> para crear tecnología que 
+        <strong>se siente viva</strong>.
+      </p>
+    `
+  },
+  {
+    icon: 'pi pi-compass text-orange-400', // 🧭
+    title: 'Gestión de proyectos',
+    content: `
+      <p>
+        Formación en <strong>Scrum</strong>, <strong>PMBOK 6.0</strong> y metodologías ágiles 
+        aplicadas a entornos tecnológicos.
+      </p>
+
+      <p class="mt-2">
+        Experiencia coordinando <strong>equipos multidisciplinarios</strong>, liderando 
+        etapas de preventa, desarrollo y entrega, siempre con foco en la 
+        <span class="text-primary-300 font-medium">comunicación</span> y la 
+        <span class="text-primary-300 font-medium">claridad</span>.
+      </p>
+
+      <p class="mt-2">
+        Mi estilo de gestión se basa en <strong>acompañar y potenciar</strong> al equipo, 
+        no solo dirigirlo.
+      </p>
+    `
+  },
+  {
+    icon: 'pi pi-comments text-orange-400', // 💬
+    title: 'Comunicación técnica y atención al cliente',
+    content: `
+      <p>
+        Capacidad para <strong>traducir conceptos complejos</strong> en lenguaje claro, 
+        tanto para <em>usuarios finales</em> como para <em>equipos técnicos</em>.
+      </p>
+
+      <p class="mt-2">
+        Experiencia creando <strong>documentación funcional</strong>, 
+        <em>diagramas de flujo</em>, <em>manuales técnicos</em> y <em>demos de producto</em>.
+      </p>
+
+      <p class="mt-2">
+        Firme creyente de que la mejor tecnología nace del 
+        <strong>entendimiento humano</strong>: escuchar, comprender y 
+        <span class="text-orange-400 font-medium">construir con empatía</span>.
+      </p>
+    `
+  }
+])
+
+
 const events = ref([
   {
     status: 'Hermas Suministros y Servicios',
@@ -150,7 +268,7 @@ const events = ref([
 </script>
 
 <template>
-    <div class="flex flex-col w-full justify-center items-center gap-8">
+    <div class="flex flex-col w-full justify-center items-center gap-20">
       <div class="flex flex-col w-full items-center min-h-screen">
         <div v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 animate-duration-1000', leaveClass: 'animate-leave fade-out-0' }"
         class="flex flex-col w-full items-center text-center gap-2 sm:gap-3 py-6">
@@ -186,6 +304,7 @@ const events = ref([
           <h2 class="text-3xl sm:text-4xl text-center font-bold text-primary-500 tracking-wide">
                   Mi experiencia
           </h2>
+          <div class="h-[3px] text-center w-20 bg-gradient-to-r from-purple-500 via-orange-400 to-pink-400 rounded-full my-2"></div>
         </div>
         <div class="card ">
            <Timeline :value="events" align="alternate" class="customized-timeline">
@@ -222,12 +341,38 @@ const events = ref([
                 </template>
             </Timeline>
         </div>
-        <div
+      </div>
+      <!--
+      <div class="flex flex-col w-[90%] items-center justify-center items-center gap-3 min-h-screen">
+        <h2 class="text-3xl sm:text-4xl text-center font-bold text-primary-500 tracking-wide">
+                  Mis Habilidades
+          </h2>
+        <div class="h-[3px] w-20 bg-gradient-to-r from-purple-500 via-orange-400 to-pink-400 rounded-full my-2"></div>
+        <Card
+            v-for="(card, i) in habilidades"
+            :key="i"
+            v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 animate-duration-1000'}"
+            class="group bg-[#161E21] border border-white/10 rounded-2xl 
+               p-8 text-left text-surface-200 shadow-[0_4px_12px_rgba(0,0,0,0.4)] transition-all duration-300 
+               hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] hover:-translate-y-1">
+                <template #title>
+                  <div class="flex gap-4">
+                    <i :class="card.icon"></i>
+                    <h2 class="font-bold mb-6 text-2xl text-orange-400">{{card.title}}</h2>
+                  </div>
+                    
+                </template>
+                <template #content>
+                    <div class="m-0 leading-relaxed text-lg text-surface-300 space-y-2" v-html="card.content"></div>
+                </template>
+            </Card>
+      </div>
+      -->
+      <div
             class="mt-10 animate-bounce text-orange-400 text-6xl cursor-pointer drop-shadow-[0_0_10px_rgba(255,138,0,0.5)] hover:drop-shadow-[0_0_15px_rgba(255,138,0,0.8)] transition-all"
             @click="scrollToNext"
             >
             <i class="pi pi-angle-down"></i>
-          </div>
       </div>
     </div>
 </template>
