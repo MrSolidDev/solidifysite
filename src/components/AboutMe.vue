@@ -275,7 +275,6 @@ const events = ref([
             <h2 class="text-3xl sm:text-4xl font-bold text-primary-500 tracking-wide">
                 Mi trayectoria
             </h2>
-
             <div class="h-[3px] w-16 bg-gradient-to-r from-purple-500 via-orange-400 to-pink-400 rounded-full my-2"></div>
 
             <h4 class="text-surface-600 text-base sm:text-lg max-w-[700px] leading-relaxed font-light">
@@ -284,13 +283,13 @@ const events = ref([
                 y <strong class="text-primary-400 font-medium">evolución constante</strong>.
             </h4>
         </div>
-        <div class="flex justify-center w-full items-center gap-8">
+        <div class="flex flex-col md:flex-row
+         justify-center w-full items-center gap-8">
             <Image v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 slide-in-from-l-8 animate-duration-1000', leaveClass: 'animate-leave fade-out-0' }"
              :src="bryanr" alt="BryanRodriguez" width="250px" class="shadow-[0_4px_8px_rgba(0,0,0,0.5)]" preview></Image>
             <div class="max-w-3xl text-lg space-y-3" 
             v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 slide-in-from-r-8 animate-duration-1000', leaveClass: 'animate-leave fade-out-0' }"
             v-html="descripcion_html"></div>
-            
         </div>
         <div
             class="mt-10 animate-bounce text-orange-400 text-6xl cursor-pointer drop-shadow-[0_0_10px_rgba(255,138,0,0.5)] hover:drop-shadow-[0_0_15px_rgba(255,138,0,0.8)] transition-all"
