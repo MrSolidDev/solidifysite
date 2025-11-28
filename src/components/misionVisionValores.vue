@@ -50,7 +50,7 @@ const cards = [
           Los pilares que guían cómo pensamos, diseñamos y construimos tecnología con propósito.
         </p>
       </div>
-      <div class="flex w-full gap-4 justify-center">
+      <div class="flex flex-col md:flex-row w-full gap-4 justify-center">
             <Card
             v-for="(card, i) in cards"
             :key="i"

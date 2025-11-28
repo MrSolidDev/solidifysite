@@ -15,7 +15,7 @@ import { scrollToNext } from '@/utilities/scroll';
             <strong class="text-orange-400">visión</strong>.  
             Nuestro propósito es acompañarte desde la idea hasta el resultado final, 
             construyendo <strong class="text-primary-200">soluciones tecnológicas</strong> 
-            <em>claras</em>, <em>confiables</em> y <em>hechas a tu medida</em>.
+            <em> claras</em>, <em>confiables</em> y <em>hechas a tu medida</em>.
             </p>
         </div>
         <div
