@@ -3,6 +3,8 @@
     import Image  from 'primevue/image';
     import Breadcrumb from 'primevue/breadcrumb';
     import logo from '@/assets/logo.jpg';
+    import TieredMenu from 'primevue/tieredmenu'
+    import Button from 'primevue/button'
 
   
   //{ icon: 'pi pi-wallet', label: 'Proyectos' }
@@ -24,6 +26,10 @@
     { label: 'M/V/V',        icon: 'pi pi-heart',     command: () => goTo('#mvv') },
     { label: 'Contacto',        icon: 'pi-address-book',     command: () => goTo('#contacto') }
   ];
+
+  const menu = ref()
+  const toggle = (ev: any) => menu.value?.toggle(ev)
+
 </script>
 
 <template>
@@ -37,26 +43,7 @@
             <h2 class="text-orange-600 text-lg md:text-2xl">Turning ideas into solid reality</h2>
           </div>
         </div>
-        <div class="card flex justify-center">
-        <!--
-          <Breadcrumb :home="home" :model="items"
-          :pt="{
-              root: { class: 'bg-[#161E21] p-2 rounded-lg' }
-          }">
-            <template #item="{item, props}">
-              <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-                    <a :href="href" v-bind="props.action" @click="navigate">
-                        <span :class="[item.icon, 'pi-fw', 'text-surface-0']" />
-                        <span class="text-surface-800 font-semibold">{{ item.label }}</span>
-                    </a>
-              </router-link>
-                    <a v-else :href="item.url" :target="item.target" v-bind="props.action">
-                        <span :class="[item.icon, 'pi-fw', 'text-surface-0']" />
-                        <span class="text-surface-700 dark:text-surface-0">{{ item.label }}</span>
-                    </a>
-            </template>
-          </Breadcrumb>
-        -->
+        <div class="card flex justify-center hidden md:flex">
           <Breadcrumb
               :home="home"
               :model="items"
@@ -76,7 +63,22 @@
                 </a>
               </template>
           </Breadcrumb>
-
+        </div>
+        <div class="card justify-center flex md:hidden">
+            <Button
+              type="button"
+              icon="pi pi-bars"
+              class="p-button-rounded p-button-text text-primary-200"
+              @click="toggle"
+              aria-haspopup="true"
+              aria-controls="overlay_tmenu"
+            />
+            <TieredMenu
+              ref="menu"
+              id="overlay_tmenu"
+              :model="items"
+              popup
+            />
         </div>
       </div>
   </header>
