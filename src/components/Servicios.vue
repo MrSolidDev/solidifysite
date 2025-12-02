@@ -157,7 +157,7 @@ const servicios = [
 
 </script>
 <template>
-    <div v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 slide-in-from-l-8 animate-duration-1000', leaveClass: 'animate-leave fade-out-0' }"
+    <div v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 animate-duration-1000', leaveClass: 'animate-leave fade-out-0' }"
      class="flex flex-col w-full justify-center items-center gap-5 min-h-screen">
      <h2 class="text-3xl text-center sm:text-4xl font-bold text-primary-400 tracking-wide">
          Servicios
@@ -169,7 +169,12 @@ const servicios = [
                       class="border-b border-white/5 group"
                       v-for="servicio in servicios" :key="servicio.servicio" :value="servicio.value">
                               <AccordionHeader class="flex items-center bg-[#1d2427]/50 justify-between text-left px-5 py-4 cursor-pointer font-semibold text-lg text-primary-200 group-hover:text-orange-400 transition-colors">{{ servicio.servicio }}</AccordionHeader>
-                              <AccordionContent class="px-5 py-4 bg-[#1d2427]/50 border-t border-white/5"> <div class="rich text-surface-100 text-base leading-relaxed space-y-3" v-html="servicio.html"></div></AccordionContent><AccordionContent class="px-5 py-4 bg-[#1d2427]/50 border-t border-white/5"> <div class="rich text-surface-100 text-base leading-relaxed space-y-3" v-html="servicio.html"></div></AccordionContent>
+                              <AccordionContent :pt="{
+                                    content: { class: '!bg-[#1d2427]/50' }
+                              }"
+                               class="px-5 py-4 !bg-[#1d2427]/50 border-t border-white/5"> 
+                                <div class="rich text-surface-100 text-base leading-relaxed space-y-3 prose prose-invert bg-transparent !bg-transparent" v-html="servicio.html"></div>
+                              </AccordionContent>
                       </AccordionPanel>
                 </Accordion>
           </div>
