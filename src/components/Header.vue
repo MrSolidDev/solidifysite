@@ -22,6 +22,7 @@
   const home = ref({ icon: 'pi pi-home', command: () => goTo('#presentacion') });
   const items = [
     { label: 'Sobre mí',     icon: 'pi pi-user',     command: () => goTo('#about') },
+    { label: 'Proyectos',    icon: 'pi pi-briefcase', command: () => goTo('#proyectos') },
     { label: 'Servicios',    icon: 'pi pi-briefcase', command: () => goTo('#servicios') },
     { label: 'M/V/V',        icon: 'pi pi-heart',     command: () => goTo('#mvv') },
     { label: 'Contacto',        icon: 'pi-address-book',     command: () => goTo('#contacto') }
@@ -39,7 +40,10 @@
         <div class="card flex gap-5 items-center">
           <Image :src="logo" alt="solidify" width="130" />
           <div class="flex flex-col gap-1">
-            <h1 class="text-primary text-4xl md:text-5xl leading-tight">SOLIDIFY</h1>
+            <div>
+              <h1 class="text-primary text-4xl md:text-5xl leading-tight">SOLIDIFY</h1>
+              <h2 class="text-surface-100 text-lg ">Bryan Rodriguez</h2>
+            </div>
             <h2 class="text-orange-600 text-lg md:text-2xl">Turning ideas into solid reality</h2>
           </div>
         </div>

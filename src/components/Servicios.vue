@@ -6,6 +6,8 @@ import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 import { scrollToNext } from '@/utilities/scroll';
 
+import { ref, onMounted } from 'vue';
+
 const servicios = [
   {
     value: '0',
@@ -155,34 +157,64 @@ const servicios = [
 ]
 
 
+const active = ref<string[] | string>(['0']);
+
+onMounted(() => {
+  // En móvil abrimos todos los paneles para evitar problemas de altura + animaciones.
+  if (window.innerWidth < 768) {
+    active.value = servicios.map((s) => s.value);
+  }
+});
 </script>
+
 <template>
-    <div v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 animate-duration-1000', leaveClass: 'animate-leave fade-out-0' }"
-     class="flex flex-col w-full justify-center items-center gap-5 min-h-screen">
-     <h2 class="text-3xl text-center sm:text-4xl font-bold text-primary-400 tracking-wide">
-         Servicios
-      </h2>
-      <div class="h-[3px] w-20 bg-gradient-to-r from-purple-500 via-orange-400 to-pink-400 rounded-full mx-auto"></div>
-          <div class="flex flex-col gap-4 w-[80%] min-h-full">
-              <Accordion class="flex flex-col flex-1 bg-[#161E21]" value="0">
-                      <AccordionPanel  
-                      class="border-b border-white/5 group"
-                      v-for="servicio in servicios" :key="servicio.servicio" :value="servicio.value">
-                              <AccordionHeader class="flex items-center bg-[#1d2427]/50 justify-between text-left px-5 py-4 cursor-pointer font-semibold text-lg text-primary-200 group-hover:text-orange-400 transition-colors">{{ servicio.servicio }}</AccordionHeader>
-                              <AccordionContent :pt="{
-                                    content: { class: '!bg-[#1d2427]/50' }
-                              }"
-                               class="px-5 py-4 !bg-[#1d2427]/50 border-t border-white/5"> 
-                                <div class="rich text-surface-100 text-base leading-relaxed space-y-3 prose prose-invert bg-transparent !bg-transparent" v-html="servicio.html"></div>
-                              </AccordionContent>
-                      </AccordionPanel>
-                </Accordion>
-          </div>
-        <div
-        class="mt-10 animate-bounce text-orange-400 text-6xl cursor-pointer drop-shadow-[0_0_10px_rgba(255,138,0,0.5)] hover:drop-shadow-[0_0_15px_rgba(255,138,0,0.8)] transition-all"
-        @click="scrollToNext"
+  <div
+    v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 animate-duration-1000' }"
+    class="flex flex-col w-full justify-center items-center gap-5 min-h-screen"
+  >
+    <h2 class="text-3xl text-center sm:text-4xl font-bold text-primary-400 tracking-wide">
+      Servicios
+    </h2>
+    <div class="h-[3px] w-20 bg-gradient-to-r from-purple-500 via-orange-400 to-pink-400 rounded-full mx-auto"></div>
+
+    <div class="flex flex-col gap-4 w-[90%] md:w-[80%] min-h-full">
+      <Accordion
+        class="flex flex-col flex-1 bg-[#161E21]"
+        v-model:activeIndex="active"
+        multiple
+        :pt="{ root: { class: 'w-full' } }"
+      >
+        <AccordionPanel
+          class="border-b border-white/5 group"
+          v-for="servicio in servicios"
+          :key="servicio.servicio"
+          :value="servicio.value"
         >
-            <i class="pi pi-angle-down"></i>
-        </div>
+          <AccordionHeader
+            class="flex items-center bg-[#1d2427]/50 justify-between text-left px-5 py-4 cursor-pointer font-semibold text-lg text-primary-200 group-hover:text-orange-400 transition-colors"
+          >
+            {{ servicio.servicio }}
+          </AccordionHeader>
+          <AccordionContent
+            :pt="{
+              content: { class: '!bg-[#1d2427]/50' }
+            }"
+            class="px-5 py-4 !bg-[#1d2427]/50 border-t border-white/5"
+          >
+            <div
+              class="rich text-surface-100 text-base leading-relaxed space-y-3 prose prose-invert bg-transparent !bg-transparent"
+              v-html="servicio.html"
+            ></div>
+          </AccordionContent>
+        </AccordionPanel>
+      </Accordion>
     </div>
+
+    <div
+      class="mt-10 animate-bounce text-orange-400 text-6xl cursor-pointer drop-shadow-[0_0_10px_rgba(255,138,0,0.5)] hover:drop-shadow-[0_0_15px_rgba(255,138,0,0.8)] transition-all"
+      @click="scrollToNext"
+    >
+      <i class="pi pi-angle-down"></i>
+    </div>
+  </div>
 </template>

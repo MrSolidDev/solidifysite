@@ -4,6 +4,7 @@
   import misionVisionValores from '@/components/misionVisionValores.vue';
   import Servicios from '@/components/Servicios.vue';
   import AboutMe from '@/components/AboutMe.vue';
+  import Proyectos from '@/components/Proyectos.vue';
   import Contacto from './components/Contacto.vue';
 </script>
 
@@ -12,6 +13,7 @@
   <div class="w-full flex justify-center items-center flex-col lg:gap-20 pt-38">
       <Presentacion id="presentacion"/>
       <AboutMe id="about" class="!scroll-mt-28"/>
+      <Proyectos id="proyectos" class="!scroll-mt-28"/>
       <Servicios id="servicios" class="scroll-mt-58"/>
       <misionVisionValores id="mvv" class="scroll-mt-28"/>
   </div>
