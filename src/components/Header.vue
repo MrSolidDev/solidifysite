@@ -40,9 +40,9 @@
         <div class="card flex gap-5 items-center">
           <Image :src="logo" alt="solidify" width="130" />
           <div class="flex flex-col gap-1">
-            <div>
+            <div class="flex gap-1">
               <h1 class="text-primary text-4xl md:text-5xl leading-tight">SOLIDIFY</h1>
-              <h2 class="text-surface-100 text-lg ">Bryan Rodriguez</h2>
+              <h2 class="text-surface-100 text-lg self-end">by Bryan Rodriguez</h2>
             </div>
             <h2 class="text-orange-600 text-lg md:text-2xl">Turning ideas into solid reality</h2>
           </div>

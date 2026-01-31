@@ -1,12 +1,8 @@
 <script lang="ts" setup>
-
-import Accordion from 'primevue/accordion';
-import AccordionPanel from 'primevue/accordionpanel';
-import AccordionHeader from 'primevue/accordionheader';
-import AccordionContent from 'primevue/accordioncontent';
+import Card from 'primevue/card';
+import Button from 'primevue/button';
+import Tag from 'primevue/tag';
 import { scrollToNext } from '@/utilities/scroll';
-
-import { ref, onMounted } from 'vue';
 
 const servicios = [
   {
@@ -157,57 +153,59 @@ const servicios = [
 ]
 
 
-const active = ref<string[] | string>(['0']);
-
-onMounted(() => {
-  // En móvil abrimos todos los paneles para evitar problemas de altura + animaciones.
-  if (window.innerWidth < 768) {
-    active.value = servicios.map((s) => s.value);
-  }
-});
 </script>
 
 <template>
   <div
     v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 animate-duration-1000' }"
-    class="flex flex-col w-full justify-center items-center gap-5 min-h-screen"
+    class="flex flex-col w-full justify-center items-center gap-6 min-h-screen"
   >
     <h2 class="text-3xl text-center sm:text-4xl font-bold text-primary-400 tracking-wide">
       Servicios
     </h2>
     <div class="h-[3px] w-20 bg-gradient-to-r from-purple-500 via-orange-400 to-pink-400 rounded-full mx-auto"></div>
 
-    <div class="flex flex-col gap-4 w-[90%] md:w-[80%] min-h-full">
-      <Accordion
-        class="flex flex-col flex-1 bg-[#161E21]"
-        v-model:activeIndex="active"
-        multiple
-        :pt="{ root: { class: 'w-full' } }"
+    <div class="grid w-[90%] md:w-[85%] xl:w-[75%] gap-5 md:grid-cols-2">
+      <Card
+        v-for="servicio in servicios"
+        :key="servicio.servicio"
+        v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 slide-in-from-b-12 animate-duration-800' }"
+        class="bg-[#161E21] border border-white/10 rounded-2xl text-surface-200 shadow-[0_6px_18px_rgba(0,0,0,0.45)] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(0,0,0,0.55)] transition-all duration-300"
       >
-        <AccordionPanel
-          class="border-b border-white/5 group"
-          v-for="servicio in servicios"
-          :key="servicio.servicio"
-          :value="servicio.value"
-        >
-          <AccordionHeader
-            class="flex items-center bg-[#1d2427]/50 justify-between text-left px-5 py-4 cursor-pointer font-semibold text-lg text-primary-200 group-hover:text-orange-400 transition-colors"
-          >
-            {{ servicio.servicio }}
-          </AccordionHeader>
-          <AccordionContent
-            :pt="{
-              content: { class: '!bg-[#1d2427]/50' }
-            }"
-            class="px-5 py-4 !bg-[#1d2427]/50 border-t border-white/5"
-          >
-            <div
-              class="rich text-surface-100 text-base leading-relaxed space-y-3 prose prose-invert bg-transparent !bg-transparent"
-              v-html="servicio.html"
-            ></div>
-          </AccordionContent>
-        </AccordionPanel>
-      </Accordion>
+        <template #title>
+          <div class="flex items-center gap-2 justify-between">
+            <h3 class="text-xl font-semibold">{{ servicio.servicio.replace(/^[^ ]+\s/, '') }}</h3>
+            <Tag value="Servicio" severity="info" class="text-xs" />
+          </div>
+        </template>
+        <template #subtitle>
+          <span class="text-sm text-primary-300">Incluye alcances y enfoque</span>
+        </template>
+        <template #content>
+          <div
+            class="rich text-surface-100 text-base leading-relaxed space-y-3 prose prose-invert bg-transparent !bg-transparent"
+            v-html="servicio.html"
+          ></div>
+        </template>
+        <template #footer>
+          <div class="flex gap-2 flex-wrap">
+            <Button
+              label="Agendar llamada"
+              icon="pi pi-calendar"
+              class="p-button-sm p-button-rounded bg-orange-500 border-orange-500 text-[#0e1315]"
+              as="a"
+              href="#contacto"
+            />
+            <Button
+              label="Ver proyectos relacionados"
+              icon="pi pi-briefcase"
+              class="p-button-sm p-button-rounded p-button-outlined text-primary-200 border-primary-300/70"
+              as="a"
+              href="#proyectos"
+            />
+          </div>
+        </template>
+      </Card>
     </div>
 
     <div
