@@ -157,7 +157,6 @@ const servicios = [
 
 <template>
   <div
-    v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 animate-duration-1000' }"
     class="flex flex-col w-full justify-center items-center gap-6 min-h-screen"
   >
     <h2 class="text-3xl text-center sm:text-4xl font-bold text-primary-400 tracking-wide">
@@ -169,7 +168,6 @@ const servicios = [
       <Card
         v-for="servicio in servicios"
         :key="servicio.servicio"
-        v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 slide-in-from-b-12 animate-duration-800' }"
         class="bg-[#161E21] border border-white/10 rounded-2xl text-surface-200 shadow-[0_6px_18px_rgba(0,0,0,0.45)] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(0,0,0,0.55)] transition-all duration-300"
       >
         <template #title>
