@@ -157,14 +157,14 @@ const servicios = [
 
 <template>
   <div
-    class="flex flex-col w-full justify-center items-center gap-6 min-h-screen"
+    class="flex flex-col w-full justify-center items-center gap-6 min-h-screen py-12 px-4"
   >
     <h2 class="text-3xl text-center sm:text-4xl font-bold text-primary-400 tracking-wide">
       Servicios
     </h2>
     <div class="h-[3px] w-20 bg-gradient-to-r from-purple-500 via-orange-400 to-pink-400 rounded-full mx-auto"></div>
 
-    <div class="grid w-[90%] md:w-[85%] xl:w-[75%] gap-5 md:grid-cols-2">
+    <div class="grid grid-cols-1 w-full max-w-6xl gap-5 md:grid-cols-2">
       <Card
         v-for="servicio in servicios"
         :key="servicio.servicio"
