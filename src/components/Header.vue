@@ -21,11 +21,11 @@
   }
   const home = ref({ icon: 'pi pi-home', command: () => goTo('#presentacion') });
   const items = [
-    { label: 'Sobre mí',     icon: 'pi pi-user',     command: () => goTo('#about') },
-    { label: 'Proyectos',    icon: 'pi pi-briefcase', command: () => goTo('#proyectos') },
-    { label: 'Servicios',    icon: 'pi pi-briefcase', command: () => goTo('#servicios') },
-    { label: 'M/V/V',        icon: 'pi pi-heart',     command: () => goTo('#mvv') },
-    { label: 'Contacto',        icon: 'pi-address-book',     command: () => goTo('#contacto') }
+    { label: 'Sobre mí',     icon: 'pi pi-user',       command: () => goTo('#about') },
+    { label: 'Proyectos',    icon: 'pi pi-briefcase',  command: () => goTo('#proyectos') },
+    { label: 'Servicios',    icon: 'pi pi-briefcase',  command: () => goTo('#servicios') },
+    { label: 'M/V/V',        icon: 'pi pi-heart',      command: () => goTo('#mvv') },
+    { label: 'Contacto',     icon: 'pi pi-address-book', command: () => goTo('#contacto') }
   ];
 
   const menu = ref()
@@ -82,6 +82,10 @@
               id="overlay_tmenu"
               :model="items"
               popup
+              appendTo="body"
+              :pt="{
+                root: { class: 'z-50 bg-[#161E21]/95 border border-white/10 rounded-xl shadow-2xl' }
+              }"
             />
         </div>
       </div>
