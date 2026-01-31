@@ -270,7 +270,7 @@ const events = ref([
 <template>
     <div class="flex flex-col w-full justify-center items-center gap-20">
       <div class="flex flex-col w-full items-center min-h-screen">
-        <div v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 animate-duration-1000', leaveClass: 'animate-leave fade-out-0' }"
+        <div v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 animate-duration-1000' }"
         class="flex flex-col w-full items-center text-center gap-2 sm:gap-3 py-6">
             <h2 class="text-3xl sm:text-4xl font-bold text-primary-500 tracking-wide">
                 Mi trayectoria
@@ -285,10 +285,10 @@ const events = ref([
         </div>
         <div class="flex flex-col md:flex-row
          justify-center w-full items-center gap-8">
-            <Image v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 slide-in-from-l-8 animate-duration-1000', leaveClass: 'animate-leave fade-out-0' }"
+            <Image v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 slide-in-from-l-8 animate-duration-1000' }"
              :src="bryanr" alt="BryanRodriguez" width="250px" class="shadow-[0_4px_8px_rgba(0,0,0,0.5)]" preview></Image>
             <div class="max-w-3xl text-lg space-y-3" 
-            v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 slide-in-from-r-8 animate-duration-1000', leaveClass: 'animate-leave fade-out-0' }"
+            v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 slide-in-from-r-8 animate-duration-1000' }"
             v-html="descripcion_html"></div>
         </div>
         <div
