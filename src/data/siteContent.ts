@@ -1,5 +1,6 @@
 export type Service = {
   id: string
+  familyId: string
   number: string
   icon: string
   title: string
@@ -11,6 +12,7 @@ export type Service = {
 
 export type Product = {
   id: string
+  familyId: string
   status: string
   icon: string
   title: string
@@ -19,7 +21,16 @@ export type Product = {
   salesFocus: string
   valuePoints: string[]
   features: string[]
+  useCases: string[]
   audiences: string[]
+}
+
+export type SolutionFamily = {
+  id: string
+  name: string
+  eyebrow: string
+  description: string
+  icon: string
 }
 
 export type CaseStudy = {
@@ -33,9 +44,37 @@ export type CaseStudy = {
   stack: string[]
 }
 
+export const productFamilies: SolutionFamily[] = [
+  {
+    id: 'ollin',
+    name: 'Familia Ollin',
+    eyebrow: 'Comunicación en movimiento',
+    description: 'Soluciones para administrar contenido, activar audiencias y convertir pantallas en experiencias de comunicación inteligentes.',
+    icon: 'pi pi-bolt',
+  },
+]
+
+export const serviceFamilies: SolutionFamily[] = [
+  {
+    id: 'ingenieria-digital',
+    name: 'Ingeniería digital',
+    eyebrow: 'Construir y conectar',
+    description: 'Servicios para desarrollar sistemas empresariales, integrar plataformas y automatizar la operación.',
+    icon: 'pi pi-code',
+  },
+  {
+    id: 'experiencia-estrategia',
+    name: 'Experiencias y estrategia',
+    eyebrow: 'Diseñar y evolucionar',
+    description: 'Servicios para crear experiencias interactivas y convertir necesidades de negocio en rutas tecnológicas claras.',
+    icon: 'pi pi-sparkles',
+  },
+]
+
 export const products: Product[] = [
   {
     id: 'concursos-interactivos',
+    familyId: 'ollin',
     status: 'Producto disponible',
     icon: 'pi pi-trophy',
     title: 'Ollin Pulse',
@@ -58,13 +97,49 @@ export const products: Product[] = [
       'Personalización visual, sonora y de mecánicas',
       'Compatibilidad con proyectores, pantallas LED y monitores',
     ],
+    useCases: ['Activaciones de marca', 'Eventos corporativos', 'Capacitaciones', 'Convenciones y ferias'],
     audiences: ['Agencias', 'Productoras', 'Recursos humanos', 'Organizadores de eventos'],
+  },
+  {
+    id: 'ollin-media',
+    familyId: 'ollin',
+    status: 'Producto disponible',
+    icon: 'pi pi-play-circle',
+    title: 'Ollin Media',
+    shortDescription: 'Plataforma integral para administrar, programar, distribuir y monitorear contenido digital en redes de pantallas desde una operación centralizada.',
+    description: 'Transforma pantallas en canales de comunicación inteligentes mediante una plataforma de administración en la nube y reproductores preparados para operar desde una sola ubicación hasta despliegues empresariales de gran escala. Su arquitectura flexible se adapta a comunicación corporativa, publicidad, señalización informativa y experiencias interactivas.',
+    salesFocus: 'Conecta contenido, tecnología y audiencia para entregar mensajes relevantes en el momento y lugar adecuados, con control centralizado y sin intervención técnica en cada ubicación.',
+    valuePoints: [
+      'Centraliza la operación de contenidos y dispositivos.',
+      'Actualiza campañas y mensajes de forma remota e inmediata.',
+      'Escala desde una pantalla hasta redes en múltiples ubicaciones.',
+      'Integra información empresarial y contenido dinámico.',
+    ],
+    features: [
+      'Gestión centralizada de imágenes, videos y páginas web',
+      'Programación por horarios, fechas y ubicaciones',
+      'Monitoreo en tiempo real de dispositivos y pantallas',
+      'Actualizaciones remotas sin intervención en sitio',
+      'Administración de múltiples ubicaciones y redes de gran escala',
+      'Integración con sistemas empresariales y fuentes externas',
+      'Compatibilidad con contenido dinámico y experiencias interactivas',
+    ],
+    useCases: [
+      'Comunicación interna corporativa',
+      'Publicidad y promociones en retail',
+      'Menús digitales y directorios interactivos',
+      'Dashboards y métricas en tiempo real',
+      'Centros de monitoreo y videowalls',
+      'Eventos y experiencias inmersivas',
+    ],
+    audiences: ['Corporativos', 'Retail', 'Restaurantes', 'Centros de monitoreo'],
   },
 ]
 
 export const services: Service[] = [
   {
     id: 'software',
+    familyId: 'ingenieria-digital',
     number: '01',
     icon: 'pi pi-desktop',
     title: 'Software empresarial a medida',
@@ -75,6 +150,7 @@ export const services: Service[] = [
   },
   {
     id: 'integraciones',
+    familyId: 'ingenieria-digital',
     number: '02',
     icon: 'pi pi-link',
     title: 'Integraciones y automatización',
@@ -85,6 +161,7 @@ export const services: Service[] = [
   },
   {
     id: 'experiencias',
+    familyId: 'experiencia-estrategia',
     number: '03',
     icon: 'pi pi-sparkles',
     title: 'Experiencias interactivas',
@@ -95,6 +172,7 @@ export const services: Service[] = [
   },
   {
     id: 'consultoria',
+    familyId: 'experiencia-estrategia',
     number: '04',
     icon: 'pi pi-compass',
     title: 'Consultoría y evolución digital',
