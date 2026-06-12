@@ -1,97 +1,51 @@
-<script lang="ts" setup>
-    import  {ref} from 'vue'
-    import Image  from 'primevue/image';
-    import Breadcrumb from 'primevue/breadcrumb';
-    import logo from '@/assets/logo.jpg';
-    import TieredMenu from 'primevue/tieredmenu'
-    import Button from 'primevue/button'
+<script setup lang="ts">
+import { ref } from 'vue'
+import logo from '@/assets/logo.jpg'
 
-  
-  //{ icon: 'pi pi-wallet', label: 'Proyectos' }
-  //const items = ref([{ icon: 'pi pi-user', label: 'Sobre mi' },  { icon: 'pi pi-lightbulb', label: 'Solidify'}, { icon: 'pi pi-address-book', label: 'Conatacto' }]);
+const open = ref(false)
+const links = [
+  { label: 'Productos', href: '#productos' },
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Casos de éxito', href: '#casos' },
+  { label: 'Proceso', href: '#proceso' },
+  { label: 'Empresa', href: '#empresa' },
+]
 
-  function goTo(id: string) {
-    const el = document.querySelector(id);
-    if (el != null) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 200; // altura header
-      window.scrollTo({ top: y, behavior: 'smooth' });  
-    } else{
-      return
-    }
-  }
-  const home = ref({ icon: 'pi pi-home', command: () => goTo('#presentacion') });
-  const items = [
-    { label: 'Sobre mí',     icon: 'pi pi-user',       command: () => goTo('#about') },
-    { label: 'Proyectos',    icon: 'pi pi-briefcase',  command: () => goTo('#proyectos') },
-    { label: 'Servicios',    icon: 'pi pi-briefcase',  command: () => goTo('#servicios') },
-    { label: 'M/V/V',        icon: 'pi pi-heart',      command: () => goTo('#mvv') },
-    { label: 'Contacto',     icon: 'pi pi-address-book', command: () => goTo('#contacto') }
-  ];
-
-  const menu = ref()
-  const toggle = (ev: any) => menu.value?.toggle(ev)
-
+function closeMenu() { open.value = false }
 </script>
 
 <template>
-  <header class="sticky top-0 z-50">
-      <div class="flex gap-5 items-center w-full bg-[#161E21] justify-between
-                  shadow-[0_4px_12px_rgba(0,0,0,0.4)] p-4 rounded-b-2xl border-b border-white/10">
-        <div class="card flex gap-5 items-center">
-          <Image :src="logo" alt="solidify" width="130" />
-          <div class="flex flex-col gap-1">
-            <div class="flex gap-1">
-              <h1 class="text-primary text-4xl md:text-5xl leading-tight">SOLIDIFY</h1>
-              <h2 class="text-surface-100 text-lg self-end">by Bryan Rodriguez</h2>
-            </div>
-            <h2 class="text-orange-600 text-lg md:text-2xl">Turning ideas into solid reality</h2>
-          </div>
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#091011]/85 backdrop-blur-xl">
+    <nav class="section-wrap flex h-20 items-center justify-between" aria-label="Navegación principal">
+      <a href="#inicio" class="flex items-center gap-3" @click="closeMenu">
+        <img :src="logo" alt="Solidify" class="h-10 w-10 rounded-xl object-cover" />
+        <div>
+          <span class="block text-lg font-semibold tracking-[.14em]">SOLIDIFY</span>
+          <span class="block text-[10px] uppercase tracking-[.18em] text-white/45">Digital solutions</span>
         </div>
-        <div class="card flex justify-center hidden md:flex">
-          <Breadcrumb
-              :home="home"
-              :model="items"
-              :pt="{
-                root: { class: 'bg-[#161E21] p-2 rounded-lg border border-white/5 shadow' }
-              }"
-            >
-              <template #item="{ item, props }">
-                <a
-                  href=""
-                  v-bind="props.action"
-                  @click.prevent
-                  class="flex items-center gap-2 px-2 py-1 hover:text-primary-300 transition-colors"
-                >
-                  <span :class="[item.icon, 'pi-fw', 'text-primary-200']" />
-                  <span class="font-semibold text-surface-200">{{ item.label }}</span>
-                </a>
-              </template>
-          </Breadcrumb>
-        </div>
-        <div class="card justify-center flex md:hidden">
-            <Button
-              type="button"
-              icon="pi pi-bars"
-              class="p-button-rounded p-button-text text-primary-200"
-              @click="toggle"
-              aria-haspopup="true"
-              aria-controls="overlay_tmenu"
-            />
-            <TieredMenu
-              ref="menu"
-              id="overlay_tmenu"
-              :model="items"
-              popup
-              appendTo="body"
-              :pt="{
-                root: { class: 'z-50 bg-[#161E21]/95 border border-white/10 rounded-xl shadow-2xl' }
-              }"
-            />
-        </div>
+      </a>
+
+      <div class="hidden items-center gap-7 lg:flex">
+        <a v-for="link in links" :key="link.href" :href="link.href" class="text-sm text-white/65 transition hover:text-white">
+          {{ link.label }}
+        </a>
+        <a href="#contacto" class="rounded-full bg-orange-400 px-5 py-2.5 text-sm font-semibold text-[#091011] transition hover:bg-orange-300">
+          Hablemos
+        </a>
       </div>
+
+      <button class="grid h-11 w-11 place-items-center rounded-full border border-white/10 lg:hidden" aria-label="Abrir menú" @click="open = !open">
+        <i :class="open ? 'pi pi-times' : 'pi pi-bars'"></i>
+      </button>
+    </nav>
+
+    <div v-if="open" class="border-t border-white/8 bg-[#0d1516] px-4 py-5 lg:hidden">
+      <div class="flex flex-col gap-1">
+        <a v-for="link in links" :key="link.href" :href="link.href" class="rounded-xl px-4 py-3 text-white/75 hover:bg-white/5" @click="closeMenu">
+          {{ link.label }}
+        </a>
+        <a href="#contacto" class="mt-2 rounded-xl bg-orange-400 px-4 py-3 text-center font-semibold text-[#091011]" @click="closeMenu">Hablemos</a>
+      </div>
+    </div>
   </header>
 </template>
-
-
-<style scoped>
-</style>

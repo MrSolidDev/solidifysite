@@ -1,44 +1,66 @@
 <script setup lang="ts">
-  import Header from '@/components/Header.vue';
-  import Presentacion from '@/components/Presentacion.vue';
-  import misionVisionValores from '@/components/misionVisionValores.vue';
-  import Servicios from '@/components/Servicios.vue';
-  import AboutMe from '@/components/AboutMe.vue';
-  import Proyectos from '@/components/Proyectos.vue';
-  import Contacto from './components/Contacto.vue';
+import Header from '@/components/Header.vue'
+import Presentacion from '@/components/Presentacion.vue'
+import Servicios from '@/components/Servicios.vue'
+import Proyectos from '@/components/Proyectos.vue'
+import AboutMe from '@/components/AboutMe.vue'
+import MisionVisionValores from '@/components/misionVisionValores.vue'
+import Contacto from '@/components/Contacto.vue'
 </script>
 
 <template>
-  <Header></Header>
-  <div class="w-full flex justify-center items-center flex-col lg:gap-20 pt-38">
-      <Presentacion id="presentacion"/>
-      <AboutMe id="about" class="!scroll-mt-28"/>
-      <Proyectos id="proyectos" class="!scroll-mt-28"/>
-      <Servicios id="servicios" class="scroll-mt-58"/>
-      <misionVisionValores id="mvv" class="scroll-mt-28"/>
+  <div class="site-shell">
+    <Header />
+    <main>
+      <Presentacion id="inicio" />
+      <Servicios id="soluciones" />
+      <Proyectos id="casos" />
+      <MisionVisionValores id="proceso" />
+      <AboutMe id="empresa" />
+    </main>
+    <Contacto id="contacto" />
   </div>
-  <Contacto id="contacto"></Contacto>
 </template>
 
 <style>
-  @import "tailwindcss";
-  @import "tailwindcss-primeui";
+@import "tailwindcss";
+@import "tailwindcss-primeui";
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
 
-    /* Carga los pesos que uses */
-  @import "@fontsource/poppins/400.css";
-  @import "@fontsource/poppins/500.css";
-  @import "@fontsource/poppins/600.css";
+:root {
+  color-scheme: dark;
+  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  background: #091011;
+  color: #edf3ef;
+  scroll-behavior: smooth;
+}
 
-  /* Aplica la fuente globalmente (PrimeVue la hereda) */
-  :root, html, body, #app {
-    font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; background: #091011; }
+a { color: inherit; text-decoration: none; }
+button, a { -webkit-tap-highlight-color: transparent; }
 
-  .rich ul { list-style: disc; margin-left: 1.5rem; }
-  .rich li { margin: 0.25rem 0; }
-  .rich strong { font-weight: 600; }
-  .rich h3 { line-height: 1.2; }
-  .rich h4 { margin-bottom: .25rem; }
+.site-shell {
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 8%, rgba(126, 63, 242, .16), transparent 28rem),
+    radial-gradient(circle at 10% 40%, rgba(255, 138, 0, .08), transparent 26rem),
+    #091011;
+}
 
-  
+.section-wrap { width: min(1180px, calc(100% - 2rem)); margin-inline: auto; }
+.section-space { padding-block: clamp(5rem, 9vw, 8rem); scroll-margin-top: 5rem; }
+.eyebrow { color: #ff9d2e; font-size: .75rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
+.display-title { font-size: clamp(2.25rem, 5vw, 4.8rem); line-height: 1.04; letter-spacing: -.045em; font-weight: 600; }
+.section-title { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.08; letter-spacing: -.035em; font-weight: 600; }
+.muted { color: #9ba9a4; }
+.glass-card { background: rgba(20, 30, 31, .72); border: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(14px); }
+.accent-line { width: 3.5rem; height: 2px; background: linear-gradient(90deg, #ff9d2e, #9a6cff); }
+
+@media (max-width: 640px) {
+  .section-wrap { width: min(100% - 1.25rem, 1180px); }
+}
 </style>
