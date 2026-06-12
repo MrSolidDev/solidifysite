@@ -1,135 +1,52 @@
 <script setup lang="ts">
-import Card from 'primevue/card';
-import Tag from 'primevue/tag';
-import Button from 'primevue/button';
-import { scrollToNext } from '@/utilities/scroll';
+import { caseStudies, services } from '@/data/siteContent'
 
-type Project = {
-  title: string;
-  year: string;
-  role: string;
-  outcome: string;
-  summary: string;
-  stack: string[];
-  linkDemo?: string;
-  linkRepo?: string;
-};
-
-const proyectos: Project[] = [
-  {
-    title: 'Panel financiero SAP + AWS',
-    year: '2025',
-    role: 'Full Stack · Arquitectura',
-    outcome: 'Consolida KPIs en vivo y reduce 70% el tiempo de conciliación.',
-    summary:
-      'Dashboard web sobre OData y Lambda Functions para finanzas. Incluye autenticación, cacheo y reporting descargable.',
-    stack: ['Vue 3', 'TypeScript', 'PrimeVue', 'AWS Lambda', 'SAP OData', 'S3'],
-    linkDemo: 'https://github.com/MrSolidDev',
-  },
-  {
-    title: 'Experiencia retail interactiva',
-    year: '2023',
-    role: 'Full Stack · Integraciones',
-    outcome: 'Aumenta 32% la interacción en tienda con contenido reactivo a sensores.',
-    summary:
-      'QuickplayX + sensores PIR y control de iluminación. Backend sincroniza playlists y métricas en tiempo real.',
-    stack: ['Node.js', 'Vue', 'Tailwind', 'Raspberry Pi', 'Nexmosphere'],
-  },
-  {
-    title: 'Portal de preventa y demos',
-    year: '2024',
-    role: 'PM · Frontend',
-    outcome: 'Estandariza propuestas y acelera demos en preventa B2B.',
-    summary:
-      'Librería de componentes reutilizables, flujos guiados y secciones editables para presentar soluciones a clientes.',
-    stack: ['Vue 3', 'TypeScript', 'Pinia', 'PrimeVue', 'Vercel'],
-    linkRepo: 'https://github.com/MrSolidDev',
-  },
-];
+function serviceName(id: string) {
+  return services.find((service) => service.id === id)?.title ?? id
+}
 </script>
 
 <template>
-  <section
-    id="proyectos"
-    class="flex flex-col w-full items-center gap-10 min-h-screen scroll-mt-24"
-    v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 animate-duration-1000' }"
-  >
-    <div class="text-center space-y-3">
-      <h2 class="text-3xl sm:text-4xl font-bold text-primary-400 tracking-wide">
-        Proyectos destacados
-      </h2>
-      <div class="h-[3px] w-24 bg-gradient-to-r from-purple-500 via-orange-400 to-pink-400 rounded-full mx-auto"></div>
-      <p class="text-surface-400 max-w-3xl text-lg leading-relaxed font-light px-4">
-        Casos reales con impacto medible. Problema → solución → resultado.
-      </p>
-    </div>
+  <section class="section-space">
+    <div class="section-wrap">
+      <div class="max-w-3xl">
+        <p class="eyebrow mb-4">Casos de éxito</p>
+        <h2 class="section-title">La oferta cobra sentido cuando produce un resultado.</h2>
+        <p class="muted mt-5 text-lg leading-8">Cada caso muestra cómo distintas capacidades de Solidify se combinan para resolver una necesidad concreta.</p>
+      </div>
 
-    <div class="grid gap-6 w-[90%] md:grid-cols-2 xl:grid-cols-3">
-      <Card
-        v-for="(p, i) in proyectos"
-        :key="i"
-        v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 slide-in-from-b-12 animate-duration-800' }"
-        class="bg-[#161E21] border border-white/10 rounded-2xl text-surface-200 shadow-[0_6px_18px_rgba(0,0,0,0.45)] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(0,0,0,0.55)] transition-all duration-300"
-      >
-        <template #title>
-          <div class="flex items-center justify-between gap-3">
-            <h3 class="text-xl font-semibold">{{ p.title }}</h3>
-            <Tag :value="p.year" severity="info" class="text-xs" />
-          </div>
-        </template>
-
-        <template #subtitle>
-          <span class="text-sm text-primary-300">{{ p.role }}</span>
-        </template>
-
-        <template #content>
-          <div class="space-y-4 text-base leading-relaxed">
-            <p class="text-surface-300">{{ p.summary }}</p>
-            <div class="border-l-4 border-orange-400/70 pl-4 bg-white/5 rounded-sm py-2">
-              <p class="text-surface-100 font-semibold">Resultado</p>
-              <p class="text-surface-300 text-sm">{{ p.outcome }}</p>
+      <div class="mt-14 space-y-5">
+        <article
+          v-for="(project, index) in caseStudies"
+          :id="`caso-${project.id}`"
+          :key="project.id"
+          class="glass-card grid overflow-hidden rounded-3xl lg:grid-cols-[.42fr_.58fr]"
+        >
+          <div class="relative flex min-h-64 flex-col justify-between overflow-hidden border-b border-white/8 p-7 lg:border-r lg:border-b-0 sm:p-9">
+            <div class="absolute inset-0 opacity-60" :class="index % 2 ? 'bg-[radial-gradient(circle_at_20%_20%,rgba(255,138,0,.18),transparent_55%)]' : 'bg-[radial-gradient(circle_at_20%_20%,rgba(126,63,242,.24),transparent_55%)]'"></div>
+            <div class="relative">
+              <p class="eyebrow">{{ project.eyebrow }}</p>
+              <h3 class="mt-5 text-2xl font-semibold leading-tight sm:text-3xl">{{ project.title }}</h3>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <Tag v-for="(tech, idx) in p.stack" :key="idx" severity="secondary" class="!bg-white/5 text-xs">
-                {{ tech }}
-              </Tag>
+            <div class="relative mt-10 flex flex-wrap gap-2">
+              <a v-for="serviceId in project.serviceIds" :key="serviceId" :href="`#servicio-${serviceId}`" class="rounded-full border border-white/12 bg-black/10 px-3 py-1.5 text-xs text-white/65 hover:border-orange-300/50 hover:text-orange-200">
+                {{ serviceName(serviceId) }}
+              </a>
             </div>
           </div>
-        </template>
 
-        <template #footer>
-          <div class="flex gap-2 flex-wrap">
-            <Button
-              v-if="p.linkDemo"
-              :href="p.linkDemo"
-              as="a"
-              target="_blank"
-              label="Ver demo"
-              icon="pi pi-external-link"
-              class="p-button-sm p-button-rounded p-button-outlined text-primary-200 border-primary-300/60"
-            />
-            <Button
-              v-if="p.linkRepo"
-              :href="p.linkRepo"
-              as="a"
-              target="_blank"
-              label="Código"
-              icon="pi pi-github"
-              class="p-button-sm p-button-rounded p-button-text text-surface-200"
-            />
+          <div class="grid gap-8 p-7 sm:p-9">
+            <div class="grid gap-7 sm:grid-cols-3">
+              <div><span class="text-xs font-semibold uppercase tracking-widest text-white/35">Reto</span><p class="muted mt-3 text-sm leading-6">{{ project.challenge }}</p></div>
+              <div><span class="text-xs font-semibold uppercase tracking-widest text-white/35">Solución</span><p class="muted mt-3 text-sm leading-6">{{ project.solution }}</p></div>
+              <div><span class="text-xs font-semibold uppercase tracking-widest text-orange-300">Resultado</span><p class="mt-3 text-sm leading-6 text-white/85">{{ project.result }}</p></div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 border-t border-white/8 pt-5">
+              <span v-for="tech in project.stack" :key="tech" class="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-white/50">{{ tech }}</span>
+            </div>
           </div>
-        </template>
-      </Card>
-    </div>
-
-    <div
-      class="mt-6 animate-bounce text-orange-400 text-6xl cursor-pointer drop-shadow-[0_0_10px_rgba(255,138,0,0.5)] hover:drop-shadow-[0_0_15px_rgba(255,138,0,0.8)] transition-all"
-      @click="scrollToNext"
-    >
-      <i class="pi pi-angle-down"></i>
+        </article>
+      </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-</style>
