@@ -1,0 +1,61 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: solidify-db
+    restart: unless-stopped
+    env_file: .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - solidify_postgres:/var/lib/postgresql/data
+    networks:
+      default:
+        aliases:
+          - postgres
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solidify-web
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - solidify_uploads:/usr/share/nginx/html/uploads:ro
+
+  api:
+    build: ./api
+    container_name: solidify-api
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/ready')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - solidify_uploads:/app/uploads
+
+  migrate:
+    build: ./api
+    container_name: solidify-migrate
+    restart: "no"
+    command: ["alembic", "upgrade", "head"]
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  solidify_postgres:
+  solidify_uploads:

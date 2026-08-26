@@ -63,9 +63,9 @@ const servicesByFamily = (familyId: string) => services.filter((service) => serv
                   <div class="mt-8 flex flex-wrap gap-2">
                     <span v-for="audience in product.audiences" :key="audience" class="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/50">{{ audience }}</span>
                   </div>
-                  <a href="#contacto" class="mt-10 inline-flex w-fit items-center gap-3 rounded-full bg-orange-400 px-6 py-3.5 font-semibold text-[#091011] transition hover:bg-orange-300">
+                  <RouterLink :to="{ name: 'home', hash: '#contacto' }" class="mt-10 inline-flex w-fit items-center gap-3 rounded-full bg-orange-400 px-6 py-3.5 font-semibold text-[#091011] transition hover:bg-orange-300">
                     Solicitar demostración <i class="pi pi-arrow-up-right text-sm"></i>
-                  </a>
+                  </RouterLink>
                 </div>
               </div>
 
@@ -135,7 +135,7 @@ const servicesByFamily = (familyId: string) => services.filter((service) => serv
                 <ul class="mt-5 grid gap-3 text-sm text-white/70 sm:grid-cols-2">
                   <li v-for="item in service.deliverables" :key="item" class="flex gap-3"><i class="pi pi-check mt-1 text-xs text-orange-300"></i><span>{{ item }}</span></li>
                 </ul>
-                <a href="#casos" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white transition group-hover:text-orange-300">Ver casos relacionados <i class="pi pi-arrow-right text-xs"></i></a>
+                <RouterLink :to="{ name: 'projects' }" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white transition group-hover:text-orange-300">Explorar productos <i class="pi pi-arrow-right text-xs"></i></RouterLink>
               </article>
             </div>
           </section>

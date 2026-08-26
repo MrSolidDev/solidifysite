@@ -8,6 +8,9 @@
   },
   "scripts": {
     "dev": "vite",
+    "local": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/local.ps1 start",
+    "local:validate": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/local.ps1 validate",
+    "local:stop": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/local.ps1 stop",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -20,7 +23,8 @@
     "primeicons": "^7.0.0",
     "primevue": "^4.4.1",
     "tailwindcss-primeui": "^0.6.1",
-    "vue": "^3.5.22"
+    "vue": "^3.5.22",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.2",

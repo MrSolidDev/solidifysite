@@ -24,5 +24,21 @@ jobs:
             git fetch origin
             git reset --hard origin/main
 
-            npm ci
-            npm run build
+            if [ ! -f .env ]; then
+              echo "Missing /opt/apps/solidifysite/.env"
+              exit 1
+            fi
+
+            docker compose up -d --build --remove-orphans
+            docker compose exec -T api python -m scripts.seed
+            docker compose exec -T api python -m scripts.create_admin
+
+            for attempt in $(seq 1 12); do
+              if curl --fail --silent http://127.0.0.1:8080/health > /dev/null; then
+                break
+              fi
+              sleep 5
+            done
+
+            curl --fail --silent http://127.0.0.1:8080/health > /dev/null
+            curl --fail --silent http://127.0.0.1:8080/api/projects > /dev/null
