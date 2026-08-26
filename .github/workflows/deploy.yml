@@ -34,11 +34,11 @@ jobs:
             docker compose exec -T api python -m scripts.create_admin
 
             for attempt in $(seq 1 12); do
-              if curl --fail --silent http://127.0.0.1:8080/health > /dev/null; then
+              if docker compose exec -T web wget -q --spider http://127.0.0.1/health; then
                 break
               fi
               sleep 5
             done
 
-            curl --fail --silent http://127.0.0.1:8080/health > /dev/null
-            curl --fail --silent http://127.0.0.1:8080/api/projects > /dev/null
+            docker compose exec -T web wget -q --spider http://127.0.0.1/health
+            docker compose exec -T web wget -qO- http://127.0.0.1/api/projects > /dev/null

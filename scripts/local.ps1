@@ -40,9 +40,11 @@ function Wait-ForApi {
 }
 
 function Wait-ForWeb {
+    $WebAddress = (docker compose port web 80).Trim()
+    $WebBaseUrl = "http://$WebAddress"
     for ($Attempt = 1; $Attempt -le 30; $Attempt++) {
         try {
-            $Response = Invoke-WebRequest -Uri 'http://127.0.0.1:8080/health' -TimeoutSec 3 -UseBasicParsing
+            $Response = Invoke-WebRequest -Uri "$WebBaseUrl/health" -TimeoutSec 3 -UseBasicParsing
             if ($Response.StatusCode -eq 200) {
                 Write-Host 'Frontend listo.' -ForegroundColor Green
                 return
@@ -72,9 +74,11 @@ function Start-Platform {
 
 function Test-Runtime {
     Write-Step 'Validando frontend y endpoints publicos'
-    $HomeResponse = Invoke-WebRequest -Uri 'http://127.0.0.1:8080/' -TimeoutSec 5 -UseBasicParsing
-    $Projects = Invoke-RestMethod -Uri 'http://127.0.0.1:8080/api/projects' -TimeoutSec 5
-    $Cases = Invoke-RestMethod -Uri 'http://127.0.0.1:8080/api/case-studies' -TimeoutSec 5
+    $WebAddress = (docker compose port web 80).Trim()
+    $WebBaseUrl = "http://$WebAddress"
+    $HomeResponse = Invoke-WebRequest -Uri "$WebBaseUrl/" -TimeoutSec 5 -UseBasicParsing
+    $Projects = Invoke-RestMethod -Uri "$WebBaseUrl/api/projects" -TimeoutSec 5
+    $Cases = Invoke-RestMethod -Uri "$WebBaseUrl/api/case-studies" -TimeoutSec 5
     if ($HomeResponse.StatusCode -ne 200) { throw 'El frontend no devolvio HTTP 200.' }
     if (@($Projects).Count -lt 1) { throw 'El API no devolvio proyectos publicados.' }
     if (@($Cases).Count -lt 1) { throw 'El API no devolvio casos publicados.' }
@@ -111,5 +115,6 @@ if ($Action -eq 'validate') {
     exit 0
 }
 
-Write-Host "`nSolidify esta disponible en http://localhost:8080" -ForegroundColor Green
+$WebAddress = (docker compose port web 80).Trim()
+Write-Host "`nSolidify esta disponible en http://$WebAddress" -ForegroundColor Green
 Write-Host 'Los contenedores seguiran activos; ejecuta npm run local:stop para apagarlos.' -ForegroundColor DarkGray
