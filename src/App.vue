@@ -1,25 +1,5 @@
-<script setup lang="ts">
-import Header from '@/components/Header.vue'
-import Presentacion from '@/components/Presentacion.vue'
-import Servicios from '@/components/Servicios.vue'
-import Proyectos from '@/components/Proyectos.vue'
-import AboutMe from '@/components/AboutMe.vue'
-import MisionVisionValores from '@/components/misionVisionValores.vue'
-import Contacto from '@/components/Contacto.vue'
-</script>
-
 <template>
-  <div class="site-shell">
-    <Header />
-    <main>
-      <Presentacion id="inicio" />
-      <Servicios id="soluciones" />
-      <Proyectos id="casos" />
-      <MisionVisionValores id="proceso" />
-      <AboutMe id="empresa" />
-    </main>
-    <Contacto id="contacto" />
-  </div>
+  <RouterView />
 </template>
 
 <style>

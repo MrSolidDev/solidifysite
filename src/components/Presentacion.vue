@@ -11,8 +11,8 @@
           Solidify diseña software empresarial, integraciones y experiencias interactivas que conectan personas, información y operación.
         </p>
         <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-          <a href="#productos" class="rounded-full bg-orange-400 px-6 py-3.5 text-center font-semibold text-[#091011] transition hover:-translate-y-0.5 hover:bg-orange-300">Explorar soluciones</a>
-          <a href="#casos" class="rounded-full border border-white/15 px-6 py-3.5 text-center font-medium transition hover:border-white/35 hover:bg-white/5">Ver casos de éxito <i class="pi pi-arrow-down-right ml-2 text-sm"></i></a>
+          <a href="#soluciones" class="rounded-full bg-orange-400 px-6 py-3.5 text-center font-semibold text-[#091011] transition hover:-translate-y-0.5 hover:bg-orange-300">Conocer soluciones</a>
+          <RouterLink :to="{ name: 'projects' }" class="rounded-full border border-white/15 px-6 py-3.5 text-center font-medium transition hover:border-white/35 hover:bg-white/5">Explorar productos <i class="pi pi-arrow-up-right ml-2 text-sm"></i></RouterLink>
         </div>
       </div>
 
