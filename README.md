@@ -25,6 +25,8 @@ location / {
 
 Hay una configuración de referencia en `infra/nginx/solidify.conf.example`. Debe adaptarse al dominio, certificado y ubicación utilizados en el VPS.
 
+El proxy Nginx del VPS y el Nginx del contenedor aceptan solicitudes de hasta 10 MB. La API valida por separado que cada imagen no exceda 8 MB. Después de cambiar la configuración del VPS se debe validar y recargar Nginx con `sudo nginx -t && sudo systemctl reload nginx`.
+
 ## API de contenido
 
 El backend está en `api/` y expone documentación interactiva en `/docs`.
