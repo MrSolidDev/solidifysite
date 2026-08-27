@@ -7,7 +7,10 @@ import { getProject } from '@/services/projects'
 
 const route = useRoute()
 const descriptionExpanded = ref(false)
+const activeImageIndex = ref(0)
 const { data: project, loading, error, reload } = useApiResource((signal) => getProject(String(route.params.slug), signal))
+const galleryImages = computed(() => project.value?.media.filter((item) => item.type === 'image') ?? [])
+const activeImage = computed(() => galleryImages.value[activeImageIndex.value])
 const descriptionParagraphs = computed(() => {
   const text = project.value?.full_description?.trim()
   if (!text) return []
@@ -17,7 +20,13 @@ const descriptionParagraphs = computed(() => {
   return Array.from({ length: Math.ceil(sentences.length / 3) }, (_, index) => sentences.slice(index * 3, index * 3 + 3).join(' '))
 })
 const visibleDescription = computed(() => descriptionExpanded.value ? descriptionParagraphs.value : descriptionParagraphs.value.slice(0, 2))
-watch(() => route.params.slug, () => { descriptionExpanded.value = false; reload() })
+function selectImage(index: number) { activeImageIndex.value = index }
+function moveImage(direction: number) {
+  const total = galleryImages.value.length
+  if (total) activeImageIndex.value = (activeImageIndex.value + direction + total) % total
+}
+watch(() => route.params.slug, () => { descriptionExpanded.value = false; activeImageIndex.value = 0; reload() })
+watch(galleryImages, (images) => { if (activeImageIndex.value >= images.length) activeImageIndex.value = 0 })
 </script>
 
 <template>
@@ -54,10 +63,17 @@ watch(() => route.params.slug, () => { descriptionExpanded.value = false; reload
           </div>
         </section>
 
-        <div v-if="project.technologies.length || project.media.length" class="mt-16 grid gap-6 lg:grid-cols-2">
-          <article v-if="project.technologies.length" class="glass-card rounded-3xl p-7"><h2 class="text-xl font-semibold">Tecnologías</h2><div class="mt-5 flex flex-wrap gap-2"><span v-for="technology in project.technologies" :key="technology.id" class="rounded-lg bg-white/5 px-3 py-2 text-xs text-white/60">{{ technology.name }}</span></div></article>
-          <article v-if="project.media.length" class="glass-card rounded-3xl p-7"><h2 class="text-xl font-semibold">Galería</h2><div class="mt-5 grid grid-cols-2 gap-3"><img v-for="media in project.media.filter((item) => item.type === 'image')" :key="media.id" :src="media.url" :alt="media.alt" class="rounded-xl object-cover" /></div></article>
-        </div>
+        <article v-if="project.technologies.length" class="glass-card mt-16 rounded-3xl p-7"><h2 class="text-xl font-semibold">Tecnologías</h2><div class="mt-5 flex flex-wrap gap-2"><span v-for="technology in project.technologies" :key="technology.id" class="rounded-lg bg-white/5 px-3 py-2 text-xs text-white/60">{{ technology.name }}</span></div></article>
+
+        <section v-if="galleryImages.length && activeImage" class="mt-16">
+          <div class="flex items-end justify-between gap-5"><div><p class="eyebrow">Galería</p><h2 class="mt-3 text-3xl font-semibold">Conoce {{ project.name }}</h2></div><span class="text-sm text-white/45">{{ activeImageIndex + 1 }} / {{ galleryImages.length }}</span></div>
+          <div class="relative mt-7 overflow-hidden rounded-3xl border border-white/10 bg-white/[.03]" tabindex="0" aria-label="Galería de imágenes" @keydown.left="moveImage(-1)" @keydown.right="moveImage(1)">
+            <img :key="activeImage.id" :src="activeImage.url" :alt="activeImage.alt || `Vista de ${project.name}`" class="h-[clamp(18rem,58vw,44rem)] w-full object-contain" />
+            <template v-if="galleryImages.length > 1"><button class="absolute left-4 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-[#091011]/80 text-white transition hover:bg-orange-400 hover:text-[#091011]" aria-label="Imagen anterior" @click="moveImage(-1)"><i class="pi pi-chevron-left"></i></button><button class="absolute right-4 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-[#091011]/80 text-white transition hover:bg-orange-400 hover:text-[#091011]" aria-label="Imagen siguiente" @click="moveImage(1)"><i class="pi pi-chevron-right"></i></button></template>
+          </div>
+          <p v-if="activeImage.alt" class="mt-3 text-center text-sm text-white/50">{{ activeImage.alt }}</p>
+          <div v-if="galleryImages.length > 1" class="mt-5 flex gap-3 overflow-x-auto pb-2"><button v-for="(media, index) in galleryImages" :key="media.id" class="shrink-0 overflow-hidden rounded-xl border-2 transition" :class="index === activeImageIndex ? 'border-orange-400' : 'border-transparent opacity-55 hover:opacity-90'" :aria-label="`Ver imagen ${index + 1}`" :aria-current="index === activeImageIndex ? 'true' : undefined" @click="selectImage(index)"><img :src="media.url" :alt="media.alt || ''" class="h-20 w-32 object-cover" loading="lazy" /></button></div>
+        </section>
         <section v-if="project.case_studies.length" class="mt-12"><p class="eyebrow text-emerald-300">Casos de éxito</p><h2 class="mt-3 text-3xl font-semibold">Resultados asociados a este producto</h2><div class="mt-6 grid gap-4"><RouterLink v-for="study in project.case_studies" :key="study.id" :to="{ name: 'case-study-detail', params: { slug: study.slug } }" class="grid gap-5 rounded-3xl border border-emerald-300/20 bg-emerald-300/[.06] p-7 transition hover:border-emerald-300/40 sm:p-9 lg:grid-cols-[1fr_auto] lg:items-center"><div><h3 class="text-2xl font-semibold">{{ study.title }}</h3><p class="muted mt-3 leading-7">{{ study.challenge }}</p></div><span class="inline-flex items-center gap-2 font-semibold text-emerald-200">Ver resultados <i class="pi pi-arrow-right"></i></span></RouterLink></div></section>
       </div>
     </section>
