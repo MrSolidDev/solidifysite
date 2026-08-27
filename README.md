@@ -82,6 +82,8 @@ El comando crea un `.env` local si todavía no existe y levanta la plataforma co
 
 Después ejecuta el seed y comprueba el frontend y los endpoints. El sitio queda disponible en `http://localhost:8080`.
 
+El puerto publicado se controla con `SOLIDIFY_WEB_PORT` en `.env`. Si `8080` ya está ocupado, puede usarse por ejemplo `SOLIDIFY_WEB_PORT=8085`; el proxy Nginx del host debe apuntar al mismo puerto.
+
 Para ejecutar además las pruebas del API (el build de producción ya ocurre dentro de `web`):
 
 ```powershell
