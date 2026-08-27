@@ -1,7 +1,9 @@
 import uuid
+from io import BytesIO
 from pathlib import Path
 
 from fastapi import APIRouter, File, Form, HTTPException, Response, UploadFile, status
+from PIL import Image, ImageOps, UnidentifiedImageError
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
@@ -17,16 +19,23 @@ from app.schemas import (
 router = APIRouter(dependencies=[])
 
 
-def image_suffix(header: bytes) -> str | None:
-    if header.startswith(b"\xff\xd8\xff"):
-        return ".jpg"
-    if header.startswith(b"\x89PNG\r\n\x1a\n"):
-        return ".png"
-    if header.startswith((b"GIF87a", b"GIF89a")):
-        return ".gif"
-    if len(header) >= 12 and header[:4] == b"RIFF" and header[8:12] == b"WEBP":
-        return ".webp"
-    return None
+Image.MAX_IMAGE_PIXELS = 40_000_000
+
+
+def optimize_image(contents: bytes, max_dimension: int, quality: int) -> bytes:
+    try:
+        with Image.open(BytesIO(contents)) as source:
+            source.verify()
+        with Image.open(BytesIO(contents)) as source:
+            image = ImageOps.exif_transpose(source)
+            image.thumbnail((max_dimension, max_dimension), Image.Resampling.LANCZOS)
+            if image.mode not in ("RGB", "RGBA"):
+                image = image.convert("RGBA" if "transparency" in image.info else "RGB")
+            output = BytesIO()
+            image.save(output, format="WEBP", quality=quality, method=6, optimize=True)
+            return output.getvalue()
+    except (UnidentifiedImageError, OSError, Image.DecompressionBombError) as exc:
+        raise HTTPException(status_code=415, detail="Only valid JPEG, PNG, WebP and GIF images are allowed") from exc
 
 
 def project_or_404(project_id: uuid.UUID, db: DbSession) -> Project:
@@ -126,35 +135,26 @@ def upload_media(
     sort_order: int = Form(default=0),
 ) -> ProjectMedia:
     project_or_404(project_id, db)
-    first_chunk = file.file.read(1024 * 1024)
-    suffix = image_suffix(first_chunk)
-    if not suffix:
-        raise HTTPException(status_code=415, detail="Only JPEG, PNG, WebP and GIF images are allowed")
     if len(alt) > 300 or sort_order < 0:
         raise HTTPException(status_code=422, detail="Invalid media metadata")
 
     settings = get_settings()
+    contents = file.file.read(settings.max_upload_bytes + 1)
+    file.file.close()
+    if len(contents) > settings.max_upload_bytes:
+        raise HTTPException(status_code=413, detail="Image exceeds the configured size limit")
+    optimized = optimize_image(contents, settings.image_max_dimension, settings.image_webp_quality)
+
     relative_directory = Path("projects") / str(project_id)
     target_directory = Path(settings.upload_directory) / relative_directory
     target_directory.mkdir(parents=True, exist_ok=True)
-    target = target_directory / f"{uuid.uuid4().hex}{suffix}"
-    total = 0
+    target = target_directory / f"{uuid.uuid4().hex}.webp"
     try:
         with target.open("xb") as output:
-            total = len(first_chunk)
-            if total > settings.max_upload_bytes:
-                raise HTTPException(status_code=413, detail="Image exceeds the configured size limit")
-            output.write(first_chunk)
-            while chunk := file.file.read(1024 * 1024):
-                total += len(chunk)
-                if total > settings.max_upload_bytes:
-                    raise HTTPException(status_code=413, detail="Image exceeds the configured size limit")
-                output.write(chunk)
+            output.write(optimized)
     except Exception:
         target.unlink(missing_ok=True)
         raise
-    finally:
-        file.file.close()
 
     media = ProjectMedia(
         project_id=project_id,

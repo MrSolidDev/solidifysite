@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     session_days: int = 7
     upload_directory: str = "/app/uploads"
     max_upload_bytes: int = 8 * 1024 * 1024
+    image_max_dimension: int = 1920
+    image_webp_quality: int = 82
     allowed_origins: list[str] = ["http://localhost:5173"]
 
     model_config = SettingsConfigDict(
